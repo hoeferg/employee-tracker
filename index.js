@@ -2,6 +2,17 @@ const express = require('express');
 const db = require('./db/connection')
 const { default: inquirer } = require('inquirer');
 const mysql = require('mysql2');
+const db = mysql.createConnection(
+    {
+        host: 'localhost',
+        // MySQL username,
+        user: 'root',
+        // MySQL password
+        password: 'yourpassword',
+        database: 'employees_db'
+    },
+    console.log(`Connected to the books_db database.`)
+);
 
 
 
@@ -71,11 +82,12 @@ function addDepartment() {
             message: 'What department would you like to add?',
         }
     ]).then(answers => {
-    db.query(`INSERT INTO department (id, name) VALUE ('id', 'addDepartmentQ'`,
-        function (err, results) {
-            console.log(results);
-        })
-})};
+        db.query(`INSERT INTO department (id, name) VALUE ?" ('id', 'addDepartmentQ'`,
+            function (err, results) {
+                console.log(results);
+            })
+    })
+};
 
 
 function addRole() {
