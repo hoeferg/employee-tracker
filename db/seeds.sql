@@ -6,11 +6,11 @@ VALUES (1, "John Smith"),
         (5, "Chel Tan");
 
 INSERT INTO role (id, title, salary)
-VALUES (1, "Manager", 150000.00),
-        (2, "Enginner" 200000.00),
-        (3, "Intern" 50000.00),
-        (4, "HR" 150000.00);
-       
+VALUES (1, "Manager", 150000),
+        (2, "Enginner" 200000),
+        (3, "Intern" 50000),
+        (4, "HR" 150000);
+
 INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
 VALUES (1, "John" "Smith", 1, 1),
         (2, "Dan" "Jones", 2, 2),
