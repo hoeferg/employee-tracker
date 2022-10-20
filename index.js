@@ -1,5 +1,4 @@
 const express = require('express');
-const db = require('./db/connection')
 const { default: inquirer } = require('inquirer');
 const mysql = require('mysql2');
 
