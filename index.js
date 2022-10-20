@@ -1,8 +1,12 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
+// required npm packages
+
+// references in the seed
 const roleList = `SELECT name, title FROM employee`
 const employeeList = `SELECT first_name, last_name FROM employee`
 
+// create connection to mysql
 const connection = mysql.createConnection(
     {
         host: 'localhost',
@@ -12,14 +16,14 @@ const connection = mysql.createConnection(
         password: 'yourpassword',
         database: 'employees_db'
     });
-
+// starts the program when it loads
 connection.connect(function (err) {
     if (err) throw err
     console.log("Starting program")
     welcome();
 })
 
-
+// starts questions
 function welcome() {
     console.log("****************************************")
     console.log("*          WELCOME TO THE              *")
@@ -29,6 +33,7 @@ function welcome() {
     startQ();
 }
 
+// first set of questions
 function startQ() {
     inquirer.prompt([
         {
@@ -46,8 +51,9 @@ function startQ() {
                 "end program"
             ]
         },
-    ]).then(function (userInput) {
-        switch (userInput.startQ) {
+        // tells what each answer is suppose to go
+    ]).then(function (choices) {
+        switch (choices) {
             case "view all department": allDepartments();
                 break;
 
@@ -73,12 +79,13 @@ function startQ() {
                 break;
 
             default: console.log("There was nothing selected");
+            
         }
     })
 }
 
+// selects all question
 function allDepartments() {
-    // I am presented with a formatted table showing department names and department ids
     db.query('SELECT * FROM department', function (err, results) {
         if (err) {
             console.log(err);
@@ -89,9 +96,8 @@ function allDepartments() {
     )
 }
 
-
+// selects all roles
 function allRoles() {
-    // I am presented with the job title, role id, the department that role belongs to, and the salary for that role
     db.query('SELECT * FROM role', function (err, results) {
         if (err) {
             console.log(err);
@@ -101,8 +107,8 @@ function allRoles() {
     })
 }
 
+// displays all employees
 function allEmployees() {
-    // I am presented with a formatted table showing employee data, including employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to
     db.query('SELECT * FROM employee', function (err, results) {
         if (err) {
             console.log(err);
@@ -113,8 +119,8 @@ function allEmployees() {
     )
 }
 
+// add department to schema
 function addDepartment() {
-    // I am prompted to enter the name of the department and that department is added to the database
     inquirer.prompt([
         {
             type: 'input',
@@ -132,9 +138,8 @@ function addDepartment() {
     })
 }
 
-
+// adds a new role to schema
 function addRole() {
-    // I am prompted to enter the name, salary, and department for the role and that role is added to the database
     inquirer.prompt([
         {
             type: 'input',
@@ -161,10 +166,9 @@ function addRole() {
             })
     })
 }
-// TODO: add info to 
 
+// adds new employee to schema
 function addEmployee() {
-    // I am prompted to enter the employee’s first name, last name, role, and manager, and that employee is added to the database
     inquirer.prompt([
         {
             type: 'input',
@@ -203,8 +207,8 @@ function addEmployee() {
     })
 }
 
+// updates employee info to schema
 function updateEmployee() {
-    // I am prompted to select an employee to update and their new role and this information is updated in the database
     inquirer.prompt([
         {
             type: 'list',
@@ -218,7 +222,6 @@ function updateEmployee() {
             message: 'What is their new role',
             choice: roleList
         },
-
     ]).then(answers => {
         db.query('INSERT INTO employee (first_name, last_name, title) VALUE (?,?,?)',
             function (err, results) {
