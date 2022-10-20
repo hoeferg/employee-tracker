@@ -1,4 +1,3 @@
-const express = require('express');
 const { default: inquirer } = require('inquirer');
 const mysql = require('mysql2');
 
@@ -12,7 +11,7 @@ const db = mysql.createConnection(
         database: 'employees_db'
     },
 
-    connection.connect(err => {
+    createConnection.connect(err => {
         if (err) throw err;
         console.log(`Connected to the books_db database.`);
         welcome();
