@@ -44,7 +44,8 @@ function startQ() {
                 "add a department",
                 "add a role",
                 "add an employee",
-                "update an employee role"
+                "update an employee role",
+                "end program"
             ]
         }
     ]).then(function (userInput) {
@@ -70,6 +71,9 @@ function startQ() {
             case "update an employee role": updateEmployee();
                 break;
 
+            case "end program": console.log("Good Bye!");
+                break;
+
             default: console.log("There was nothing selected");
         }
     })
@@ -82,6 +86,7 @@ function allDepartments() {
             console.log(err);
         }
         console.table(results);
+        startQ();
     }
     )
 }
@@ -90,12 +95,12 @@ function allDepartments() {
 function allRoles() {
     // I am presented with the job title, role id, the department that role belongs to, and the salary for that role
     db.query('SELECT * FROM role', function (err, results) {
-        console.table(results);
         if (err) {
             console.log(err);
         }
-    }
-    )
+        console.table(results);
+        startQ();
+    })
 }
 
 function allEmployees() {
@@ -105,6 +110,7 @@ function allEmployees() {
             console.log(err);
         }
         console.table(results);
+        startQ();
     }
     )
 }
@@ -123,6 +129,7 @@ function addDepartment() {
                 console.log(results);
                 if (err) throw err;
                 allDepartments();
+                startQ();
             })
     })
 }
@@ -152,6 +159,7 @@ function addRole() {
                 console.log(results);
                 if (err) throw err;
                 allRoles();
+                startQ();
             })
     })
 }
@@ -192,6 +200,7 @@ function addEmployee() {
                 console.log(results);
                 if (err) throw err;
                 allEmployees();
+                startQ();
             })
     })
 }
@@ -211,13 +220,14 @@ function updateEmployee() {
             message: 'What is their new role',
             choice: roleList
         },
-        
+
     ]).then(answers => {
         db.query('INSERT INTO employee (first_name, last_name, title) VALUE (?,?,?)',
             function (err, results) {
                 console.log(results);
                 if (err) throw err;
                 allEmployees();
+                startQ();
             })
     })
 }
