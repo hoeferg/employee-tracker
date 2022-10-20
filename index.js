@@ -1,5 +1,6 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
+
 // required npm packages
 
 // references in the seed
@@ -53,8 +54,8 @@ function startQ() {
         },
         // tells what each answer is suppose to go
     ]).then(function (choices) {
-        switch (choices) {
-            case "view all department": allDepartments();
+        switch (choices.startQ) {
+            case "view all departments": allDepartments();
                 break;
 
             case "view all roles": allRoles();
@@ -86,7 +87,7 @@ function startQ() {
 
 // selects all question
 function allDepartments() {
-    db.query('SELECT * FROM department', function (err, results) {
+    connection.query('SELECT * FROM department', function (err, results) {
         if (err) {
             console.log(err);
         }
@@ -98,7 +99,7 @@ function allDepartments() {
 
 // selects all roles
 function allRoles() {
-    db.query('SELECT * FROM role', function (err, results) {
+    connection.query('SELECT * FROM role', function (err, results) {
         if (err) {
             console.log(err);
         }
@@ -109,7 +110,7 @@ function allRoles() {
 
 // displays all employees
 function allEmployees() {
-    db.query('SELECT * FROM employee', function (err, results) {
+    connection.query('SELECT * FROM employee', function (err, results) {
         if (err) {
             console.log(err);
         }
@@ -128,7 +129,7 @@ function addDepartment() {
             message: 'What department would you like to add?',
         }
     ]).then(answers => {
-        db.query('INSERT INTO department (name) VALUE (?)',
+        connection.query('INSERT INTO department (name) VALUE (?)',
             function (err, results) {
                 console.log(results);
                 if (err) throw err;
@@ -157,7 +158,7 @@ function addRole() {
             message: 'What department is the role in?',
         },
     ]).then(answers => {
-        db.query('INSERT INTO role (title, salary, department_id, ) VALUE (?, ?, ?, ?, ?)',
+        connection.query('INSERT INTO role (title, salary, department_id, ) VALUE (?, ?, ?, ?, ?)',
             function (err, results) {
                 console.log(results);
                 if (err) throw err;
@@ -197,7 +198,7 @@ function addEmployee() {
             choices: ['yes', 'no']
         },
     ]).then(answers => {
-        db.query('INSERT INTO employee (first_name, last_name, salary, title, manager) VALUE (?, ?, ?, ?, ?)',
+        connection.query('INSERT INTO employee (first_name, last_name, salary, title, manager) VALUE (?, ?, ?, ?, ?)',
             function (err, results) {
                 console.log(results);
                 if (err) throw err;
@@ -223,7 +224,7 @@ function updateEmployee() {
             choice: roleList
         },
     ]).then(answers => {
-        db.query('INSERT INTO employee (first_name, last_name, title) VALUE (?,?,?)',
+        connection.query('INSERT INTO employee (first_name, last_name, title) VALUE (?,?,?)',
             function (err, results) {
                 console.log(results);
                 if (err) throw err;
