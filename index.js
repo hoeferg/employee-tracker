@@ -1,4 +1,4 @@
-const { default: inquirer } = require('inquirer');
+const inquirer = require('inquirer');
 const mysql = require('mysql2');
 const roleList = `SELECT name, title FROM employee`
 const employeeList = `SELECT first_name, last_name FROM employee`
@@ -45,7 +45,7 @@ function startQ() {
                 "update an employee role",
                 "end program"
             ]
-        }
+        },
     ]).then(function (userInput) {
         switch (userInput.startQ) {
             case "view all department": allDepartments();
