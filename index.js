@@ -3,10 +3,6 @@ const mysql = require('mysql2');
 
 // required npm packages
 
-// references in the seed
-const roleList = `SELECT name, title FROM employee`
-const employeeList = `SELECT first_name, last_name FROM employee`
-
 // create connection to mysql
 const connection = mysql.createConnection(
     {
@@ -23,6 +19,20 @@ connection.connect(function (err) {
     console.log("Starting program")
     welcome();
 })
+// references in the seed
+// function roleData() {
+//     let roles = connection.query('SELECT * FROM role', (err, data) => {
+//         return data
+//         // for (let i = 0; i < data.length; i++) {
+//         //     roles.push(data[i].title)
+//         // }
+//     }) 
+//     console.log(roles)
+// }
+// roleData()
+
+
+// const employeeList = connection.query(`SELECT first_name, last_name FROM employee`)
 
 // starts questions
 function welcome() {
@@ -80,7 +90,7 @@ function startQ() {
                 break;
 
             default: console.log("There was nothing selected");
-            
+
         }
     })
 }
@@ -170,43 +180,59 @@ function addRole() {
 
 // adds new employee to schema
 function addEmployee() {
-    inquirer.prompt([
-        {
-            type: 'input',
-            name: 'fName',
-            message: 'What is the first name of the person you would like to add?',
-        },
-        {
-            type: 'input',
-            name: 'lName',
-            message: 'What is the last name of the person you would like to add?',
-        },
-        {
-            type: 'input',
-            name: 'salary',
-            message: 'What is there salary?',
-        },
-        {
-            type: 'input',
-            name: 'addRole',
-            message: roleList
-        },
-        {
-            type: 'list',
-            name: 'manager',
-            message: 'Are they a manager?',
-            choices: ['yes', 'no']
-        },
-    ]).then(answers => {
-        connection.query('INSERT INTO employee (first_name, last_name, salary, title, manager) VALUE (?, ?, ?, ?, ?)',
-            function (err, results) {
-                console.log(results);
-                if (err) throw err;
-                allEmployees();
-                startQ();
-            })
-    })
+    // connection.query("SELECT * FROM role", (err, data) => {
+
+
+        inquirer.prompt([
+            {
+                type: 'input',
+                name: 'fName',
+                message: 'What is the first name of the person you would like to add?',
+            },
+            {
+                type: 'input',
+                name: 'lName',
+                message: 'What is the last name of the person you would like to add?',
+            },
+            {
+                type: 'input',
+                name: 'salary',
+                message: 'What is there salary?',
+            },
+            {
+                type: 'list',
+                name: 'addRole',
+                message: "What is their role",
+                // choices: function () {
+                //     let [roles] = connection.query('SELECT * FROM role', (err, data) => {
+                //         for (let i = 0; i < data.length; i++) {
+                //             roles.push(data[i].title)
+                //         }
+                //     })
+                //     return roles
+                // }
+            },
+            {
+                type: 'list',
+                name: 'manager',
+                message: 'Who is their manager?',
+                // choices: function () {
+                //     let managers = connection.query('SELECT * from ')
+
+                // }
+            },
+        ]).then(answers => {
+            connection.query('INSERT INTO employee (first_name, last_name, salary, title, manager) VALUE (?, ?, ?, ?, ?)',
+                function (err, results) {
+                    console.log(results);
+                    if (err) throw err;
+                    allEmployees();
+                    startQ();
+                })
+        })
+    // })
 }
+
 
 // updates employee info to schema
 function updateEmployee() {
