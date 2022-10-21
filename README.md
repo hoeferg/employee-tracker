@@ -11,7 +11,7 @@ To install this program you will have to create a copy of the code on your own m
 
 If you would like to use this app you will first have to start the program using node.js. From there you will be given a list of options to pick from. Click on the option that represent what you would like to do. Then answer the questions that are displayed after. After the questions are answered, your information will be displayed in the terminal. 
 
-![screen shot](assets/images/screenshot.png)
+![screen shot](./assets/employee.png)
 ![video](https://drive.google.com/file/d/18jmC5KGhyfvAkHMcycKUqv1UjcRzQxhg/view)
 
 ## Credits

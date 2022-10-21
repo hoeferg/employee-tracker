@@ -203,15 +203,15 @@ function addEmployee() {
                 type: 'list',
                 name: 'addRole',
                 message: "What is their role",
-                // choices: function () {
-                //     let [roles] = connection.query('SELECT * FROM role', (err, data) => {
-                //         for (let i = 0; i < data.length; i++) {
-                //             roles.push(data[i].title)
-                //         }
-                //     })
-                //     return roles
-                // }
-            },
+                choices: async function () {
+                    
+                    return await (await connection.promise().query('SELECT * FROM role'))[0].map(
+                        roles => {
+                            console.log(roles) 
+                            return roles.title 
+                        }
+                    )
+            }},
             {
                 type: 'list',
                 name: 'manager',
