@@ -86,13 +86,18 @@ function startQ() {
             case "update an employee role": updateEmployee();
                 break;
 
-            case "end program": console.log("Good Bye!");
+            case "end program": console.log("Good Bye!")
+                endProgram();
                 break;
 
             default: console.log("There was nothing selected");
 
         }
     })
+}
+
+function endProgram() {
+    process.exit()
 }
 
 // selects all question
@@ -183,53 +188,54 @@ function addEmployee() {
     // connection.query("SELECT * FROM role", (err, data) => {
 
 
-        inquirer.prompt([
-            {
-                type: 'input',
-                name: 'fName',
-                message: 'What is the first name of the person you would like to add?',
-            },
-            {
-                type: 'input',
-                name: 'lName',
-                message: 'What is the last name of the person you would like to add?',
-            },
-            {
-                type: 'input',
-                name: 'salary',
-                message: 'What is there salary?',
-            },
-            {
-                type: 'list',
-                name: 'addRole',
-                message: "What is their role",
-                choices: async function () {
-                    
-                    return await (await connection.promise().query('SELECT * FROM role'))[0].map(
-                        roles => {
-                            console.log(roles) 
-                            return roles.title 
-                        }
-                    )
-            }},
-            {
-                type: 'list',
-                name: 'manager',
-                message: 'Who is their manager?',
-                // choices: function () {
-                //     let managers = connection.query('SELECT * from ')
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'fName',
+            message: 'What is the first name of the person you would like to add?',
+        },
+        {
+            type: 'input',
+            name: 'lName',
+            message: 'What is the last name of the person you would like to add?',
+        },
+        {
+            type: 'input',
+            name: 'salary',
+            message: 'What is there salary?',
+        },
+        {
+            type: 'list',
+            name: 'addRole',
+            message: "What is their role",
+            choices: async function () {
 
-                // }
-            },
-        ]).then(answers => {
-            connection.query('INSERT INTO employee (first_name, last_name, salary, title, manager) VALUE (?, ?, ?, ?, ?)',
-                function (err, results) {
-                    console.log(results);
-                    if (err) throw err;
-                    allEmployees();
-                    startQ();
-                })
-        })
+                return await (await connection.promise().query('SELECT * FROM role'))[0].map(
+                    roles => {
+                        console.log(roles)
+                        return roles.title
+                    }
+                )
+            }
+        },
+        {
+            type: 'list',
+            name: 'manager',
+            message: 'Who is their manager?',
+            // choices: function () {
+            //     let managers = connection.query('SELECT * from ')
+
+            // }
+        },
+    ]).then(answers => {
+        connection.query('INSERT INTO employee (first_name, last_name, salary, title, manager) VALUE (?, ?, ?, ?, ?)',
+            function (err, results) {
+                console.log(results);
+                if (err) throw err;
+                allEmployees();
+                startQ();
+            })
+    })
     // })
 }
 
