@@ -18,7 +18,7 @@ If you would like to use this app you will first have to start the program using
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/hoeferg/GaylePortfolio
+   git clone https://github.com/hoeferg/employee-tracker
    ```
 2. Install NPM packages
    ```sh
