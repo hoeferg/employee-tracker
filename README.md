@@ -1,5 +1,7 @@
 # Employee Tracker
 
+<img src ="employee.png" />
+
 ## Table of Contents  
 * [Description](##Description)  
 * [Installation](##Installation)  
