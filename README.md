@@ -4,6 +4,7 @@
 
 ## Table of Contents  
 * [Description](##Description)  
+* [Usage](##Usage) 
 * [Installation](##Installation)  
 * [License](##License)  
 * [Contact](##Contact)  
